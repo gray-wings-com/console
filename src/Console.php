@@ -70,7 +70,8 @@ class Console
         );
     }
 
-    private function getConsoleWidth(): int {
+    private function getConsoleWidth(): int
+    {
         $width = `tput cols`;
         if ($width === null) {
             $width = 80;
