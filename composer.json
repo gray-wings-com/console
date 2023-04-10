@@ -1,11 +1,11 @@
 {
-  "name": "graywings/docker-php-template",
-  "type": "project",
+  "name": "graywings/console",
+  "type": "library",
   "license": "MIT",
-  "description": "This is template for PHP development",
+  "description": "This is color console for PHP",
   "autoload": {
     "psr-4": {
-      "App\\": "src/"
+      "GrayWings\\Console\\": "src/"
     }
   },
   "scripts": {
