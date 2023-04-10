@@ -8,7 +8,7 @@ class Console
     private ?Color $fontColor;
     private ?Decorations $decorations;
 
-    private const FORMAT_STRING = "\033[%d;%d;%dm%s\033[0m";
+    private const FORMAT_STRING = "\e[%sm%s\e[0m";
 
     public function __construct()
     {
@@ -59,13 +59,30 @@ class Console
         }
     }
 
+    private function buildDecorationString(): string
+    {
+        $built = '';
+        if ($this->decorations !== null) {
+            $this->decorations->value === 0 ?: $built .= $this->decorations->value . ';';
+        }
+        if ($this->fontColor !== null) {
+            $this->fontColorNumber() === 0 ?: $built .= $this->fontColorNumber() . ';';
+        }
+        if ($this->backgroundColor !== null) {
+            $this->backgroundColorNumber() === 0 ?: $built .= $this->backgroundColorNumber() . ';';
+        }
+        if (empty($built)) {
+            return '0';
+        } else {
+            return trim($built, ';');
+        }
+    }
+
     private function format(string $text): string
     {
         return sprintf(
             self::FORMAT_STRING,
-            $this->fontColorNumber(),
-            $this->backgroundColorNumber(),
-            $this->decorations?->value ?? 0,
+            $this->buildDecorationString(),
             $text
         );
     }
